@@ -26,6 +26,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "MyTerrain.h"
 USING_NS_CC;
 
 class HelloWorld : public cocos2d::Scene
@@ -40,6 +41,11 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+	Size visibleSize;
+	Vec2 origin;
+	void createGameScreen();
+	MyTerrain* _Terrain;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
