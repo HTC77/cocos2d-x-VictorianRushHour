@@ -27,6 +27,7 @@
 
 #include "cocos2d.h"
 #include "MyTerrain.h"
+#include "Player.h"
 USING_NS_CC;
 
 class HelloWorld : public cocos2d::Scene
@@ -44,6 +45,7 @@ public:
 
 	Size visibleSize;
 	Vec2 origin;
+	Player* _player;
 	void createGameScreen();
 	MyTerrain* _Terrain;
 };

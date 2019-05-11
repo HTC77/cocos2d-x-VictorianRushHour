@@ -24,7 +24,6 @@
 
 #include "HelloWorldScene.h"
 
-
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -102,6 +101,11 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 void HelloWorld::createGameScreen()
 {	
+	// Terrain
 	_Terrain = MyTerrain::create();
 	this->addChild(_Terrain);
+
+	// Player
+	_player = Player::create();
+	this->addChild(_player);
 }
