@@ -116,5 +116,6 @@ void HelloWorld::update(float delta)
 {
 	_player->update(delta);
 	_terrain->move(_player->getVector().x);
+	if (_player->getState() != kPlayerDying) _terrain->checkCollision(_player);
 	_player->place();
 }

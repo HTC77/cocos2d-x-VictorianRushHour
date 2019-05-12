@@ -17,6 +17,10 @@ public:
 	CC_SYNTHESIZE(float, _height, Height)
 	CC_SYNTHESIZE(Vec2, _vector, Vector)
 	virtual void place() { this->setPosition(_nextPosition); }
+	void setSize() {
+		_width = this->boundingBox().size.width;
+		_height = this->boundingBox().size.height;
+	}
 };
 
 #endif // __Prefix__GameSprite__

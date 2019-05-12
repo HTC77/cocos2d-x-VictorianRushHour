@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Block.h"
 
+class Player;
 USING_NS_CC;
 
 class MyTerrain : public Node
@@ -27,5 +28,6 @@ public:
 	void initBlock(Block* block);
 	void distributeBlocks();
 	void move(float xMove);
+	void checkCollision(Player * player);
 };
 #endif // __Prefix__MyTerrain__

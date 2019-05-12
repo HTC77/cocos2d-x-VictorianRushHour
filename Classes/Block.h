@@ -22,6 +22,22 @@ public:
 	void setupBlock(float width, float height, int type);
 
 	CC_SYNTHESIZE(int, _type, Type);
+	
+	virtual int left() {
+		return this->getPositionX();
+	}
+
+	virtual int right() {
+		return this->getPositionX() + _width;
+	}
+
+	virtual int top() {
+		return this->getHeight();
+	}
+
+	virtual int bottom() {
+		return 0;
+	}
 };
 
 #endif // __Prefix__Block__

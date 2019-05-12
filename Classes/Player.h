@@ -28,8 +28,37 @@ public:
 	void update(float delta) override;
 	CC_SYNTHESIZE(float, _maxSpeed, MaxSpeed);
 	CC_SYNTHESIZE(PlayerState, _state, State);
-	virtual void place() {
-		this->setPositionY(_nextPosition.y);
+	
+	int left() {
+		return this->getPositionX() - _width * 0.5f;
+	}
+
+	int right() {
+		return this->getPositionX() + _width * 0.5f;
+	}
+
+	int top() {
+		return this->getPositionY();
+	}
+
+	int bottom() {
+		return this->getPositionY() - _height;
+	}
+
+	int next_left() {
+		return _nextPosition.x - _width * 0.5f;
+	}
+
+	int next_right() {
+		return _nextPosition.x + _width * 0.5f;
+	}
+
+	int next_top() {
+		return _nextPosition.y;
+	}
+
+	int next_bottom() {
+		return _nextPosition.y - _height;
 	}
 };
 

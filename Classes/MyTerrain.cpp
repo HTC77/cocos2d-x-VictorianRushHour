@@ -1,5 +1,6 @@
 #include "MyTerrain.h"
 #include <algorithm>
+#include "Player.h"
 using namespace std;
 
 vector<int> _blockTypes = {1,2,3,4,1,3,2,4,3,2,1,4,2,3,1,4,2,3,1,2,3,2,3,4,1,2,4,3,1,3,1,4,2,4,2,1,2,3 };
@@ -89,6 +90,37 @@ void MyTerrain::move(float xMove)
 {
 	if (xMove < 0) return;
 	this->setPositionX(this->getPositionX() - xMove);
+}
+
+void MyTerrain::checkCollision(Player* player)
+{
+
+	if (player->getState() == kPlayerDying) return;
+
+	int count = _blocks.size();
+	Block * block;
+	bool inAir = true;
+	int i;
+
+	for (i = 0; i < count; i++) {
+
+		block = _blocks.at(i);
+		if (block->getType() == kBlockGap) continue;
+
+		// if within x, check y (bottom collision)
+		if (player->right() >= this->getPositionX() + block->left()
+			&& player->left() <= this->getPositionX() + block->right()) {
+
+			if (player->bottom() >= block->top() && player->next_bottom() <= block->top()
+				&& player->top() > block->top()) {
+				player->setNextPosition(Vec2(player->getNextPosition().x, block->top() + player->getHeight()));
+				player->setVector(Vec2(player->getVector().x, 0));
+				player->setRotation(0.0);
+				inAir = false;
+				break;
+			}
+		}
+	}
 }
 
 void MyTerrain::addBlocks(int currentWidth)

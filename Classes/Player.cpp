@@ -15,6 +15,7 @@ Player* Player::create()
 	if (obj && obj->initWithFile("blank.png"))
 	{
 		obj->autorelease();
+		obj->setSize();
 		obj->initPlayer();
 		return obj;
 	}
