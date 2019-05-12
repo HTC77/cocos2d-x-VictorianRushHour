@@ -82,6 +82,8 @@ bool HelloWorld::init()
 
 	this->createGameScreen();
 
+	this->scheduleUpdate();
+
     return true;
 }
 
@@ -102,10 +104,16 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::createGameScreen()
 {	
 	// Terrain
-	_Terrain = MyTerrain::create();
-	this->addChild(_Terrain);
+	_terrain = MyTerrain::create();
+	this->addChild(_terrain);
 
 	// Player
 	_player = Player::create();
 	this->addChild(_player);
+}
+
+void HelloWorld::update(float delta)
+{
+	_player->update(delta);
+	_terrain->move(_player->getVoctor().x);
 }

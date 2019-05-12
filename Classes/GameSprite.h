@@ -15,7 +15,7 @@ public:
 	CC_SYNTHESIZE(Vec2, _nextPosition, NextPosition)
 	CC_SYNTHESIZE(float, _width, Width)
 	CC_SYNTHESIZE(float, _height, Height)
-	CC_SYNTHESIZE(Vec2, _vector, _voctor)
+	CC_SYNTHESIZE(Vec2, _vector, Voctor)
 };
 
 #endif // __Prefix__GameSprite__

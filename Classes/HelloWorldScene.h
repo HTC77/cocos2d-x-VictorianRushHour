@@ -47,7 +47,8 @@ public:
 	Vec2 origin;
 	Player* _player;
 	void createGameScreen();
-	MyTerrain* _Terrain;
+	MyTerrain* _terrain;
+	void update(float delta) override;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -85,6 +85,12 @@ void MyTerrain::distributeBlocks()
 	}
 }
 
+void MyTerrain::move(float xMove)
+{
+	if (xMove < 0) return;
+	this->setPositionX(this->getPositionX() - xMove);
+}
+
 void MyTerrain::addBlocks(int currentWidth)
 {
 	Block * block;

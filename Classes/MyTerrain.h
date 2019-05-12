@@ -26,5 +26,6 @@ public:
 	void addBlocks(int currentWidth);
 	void initBlock(Block* block);
 	void distributeBlocks();
+	void move(float xMove);
 };
 #endif // __Prefix__MyTerrain__

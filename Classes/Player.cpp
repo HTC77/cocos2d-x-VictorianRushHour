@@ -4,6 +4,8 @@ Player::Player()
 {
 	_nextPosition = Point::ZERO;
 	_nextPosition.y = _screenSize.height * 0.6f;
+	_maxSpeed = PLAYER_INITIAL_SPEED;
+	_speed = 0;
 }
 
 Player* Player::create()
@@ -26,5 +28,17 @@ void Player::initPlayer()
 	_width = 18;
 	this->setTextureRect(Rect(0, 0, _width, _height));
 	this->setColor(Color3B(255, 255, 255));
+}
+
+void Player::update(float delta)
+{
+	if (_speed + ACCELERATION <= _maxSpeed) {
+		_speed += ACCELERATION;
+	}
+	else {
+		_speed = _maxSpeed;
+	}
+
+	_vector.x = _speed;
 }
 
