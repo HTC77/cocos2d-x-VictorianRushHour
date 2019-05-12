@@ -115,5 +115,6 @@ void HelloWorld::createGameScreen()
 void HelloWorld::update(float delta)
 {
 	_player->update(delta);
-	_terrain->move(_player->getVoctor().x);
+	_terrain->move(_player->getVector().x);
+	_player->place();
 }

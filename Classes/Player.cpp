@@ -6,6 +6,7 @@ Player::Player()
 	_nextPosition.y = _screenSize.height * 0.6f;
 	_maxSpeed = PLAYER_INITIAL_SPEED;
 	_speed = 0;
+	_state = kPlayerMoving;
 }
 
 Player* Player::create()
@@ -23,7 +24,7 @@ void Player::initPlayer()
 {
 	this->setAnchorPoint(Vec2(0.5f, 1.0f));
 	this->setPosition(Vec2(_screenSize.width * 0.2f, _nextPosition.y));
-
+	this->setNextPosition(this->getPosition());
 	_height = 22.8;
 	_width = 18;
 	this->setTextureRect(Rect(0, 0, _width, _height));
@@ -40,5 +41,22 @@ void Player::update(float delta)
 	}
 
 	_vector.x = _speed;
-}
 
+	switch (_state) {
+	case kPlayerMoving:
+		_vector.y -= GRAVITY;
+		break;
+
+	case kPlayerFalling:
+		_vector.y -= GRAVITY;
+		_vector.x *= AIR_FRICTION;
+		break;
+
+	case kPlayerDying:
+		_vector.y -= GRAVITY;
+		_vector.x = -_speed;
+		this->setPositionX(this->getPositionX() + _vector.x);
+		break;
+	}
+	_nextPosition.y = this->getPositionY() + _vector.y;
+}

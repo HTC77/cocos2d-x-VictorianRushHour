@@ -15,7 +15,8 @@ public:
 	CC_SYNTHESIZE(Vec2, _nextPosition, NextPosition)
 	CC_SYNTHESIZE(float, _width, Width)
 	CC_SYNTHESIZE(float, _height, Height)
-	CC_SYNTHESIZE(Vec2, _vector, Voctor)
+	CC_SYNTHESIZE(Vec2, _vector, Vector)
+	virtual void place() { this->setPosition(_nextPosition); }
 };
 
 #endif // __Prefix__GameSprite__
