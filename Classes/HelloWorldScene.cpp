@@ -47,6 +47,7 @@ bool HelloWorld::init()
     }
 
     visibleSize = Director::getInstance()->getVisibleSize();
+	_screenSize = Director::getInstance()->getWinSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
@@ -81,6 +82,13 @@ bool HelloWorld::init()
     // 3. add your codes below...
 
 	this->createGameScreen();
+
+	// touch listener
+	auto touchListner = EventListenerTouchOneByOne::create();
+	touchListner->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	touchListner->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded,this);
+	touchListner->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled,this);
+	getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListner, this);
 
 	this->scheduleUpdate();
 
@@ -118,4 +126,34 @@ void HelloWorld::update(float delta)
 	_terrain->move(_player->getVector().x);
 	if (_player->getState() != kPlayerDying) _terrain->checkCollision(_player);
 	_player->place();
+
+	 if (_player->getNextPosition().y > _screenSize.height * 0.6f) {
+	 	this->setPositionY(
+	 		(_screenSize.height * 0.6f - _player->getNextPosition().y) * 0.8f);
+	 }
+	 else {
+	 	this->setPositionY(0);
+	 }
+}
+
+bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
+{
+	if (_player->getState() == kPlayerFalling) {
+		_player->setFloating(!_player->getFloating());
+	}
+	else {
+		if (_player->getState() != kPlayerDying) _player->setJumping(true);
+	}
+
+	return true;
+}
+
+void HelloWorld::onTouchEnded(Touch* touch, Event* event)
+{
+	_player->setJumping(false);
+}
+
+void HelloWorld::onTouchCancelled(Touch* touch, Event* event)
+{
+	_player->setJumping(false);
 }

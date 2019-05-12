@@ -103,7 +103,6 @@ void MyTerrain::checkCollision(Player* player)
 	int i;
 
 	for (i = 0; i < count; i++) {
-
 		block = _blocks.at(i);
 		if (block->getType() == kBlockGap) continue;
 
@@ -120,6 +119,38 @@ void MyTerrain::checkCollision(Player* player)
 				break;
 			}
 		}
+	}
+
+	for (i = 0; i < count; i++) {
+		block = _blocks.at(i);
+		if (block->getType() == kBlockGap) continue;
+
+		//now if within y, check x (side collision)
+		if ((player->bottom() < block->top() && player->top() > block->bottom())
+			|| (player->next_bottom() < block->top() && player->next_top() > block->bottom())) {
+
+			if (player->right() >= this->getPositionX() + block->getPositionX()
+				&& player->left() < this->getPositionX() + block->getPositionX()) {
+
+				player->setPositionX(this->getPositionX() + block->getPositionX() - player->getWidth() * 0.5f);
+				player->setNextPosition(Vec2(this->getPositionX() + block->getPositionX() - player->getWidth() * 0.5f, player->getNextPosition().y));
+				player->setVector(Vec2(player->getVector().x * -0.5f, player->getVector().y));
+				if (player->bottom() + player->getHeight() * 0.2f < block->top()) {
+					player->setState(kPlayerDying);
+					return;
+				}
+
+				break;
+			}
+		}
+	}
+
+	if (inAir) {
+		player->setState(kPlayerFalling);
+	}
+	else {
+		player->setState(kPlayerMoving);
+		player->setFloating(false);
 	}
 }
 

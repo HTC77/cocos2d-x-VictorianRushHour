@@ -43,12 +43,15 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
-	Size visibleSize;
+	Size visibleSize, _screenSize;
 	Vec2 origin;
 	Player* _player;
 	void createGameScreen();
 	MyTerrain* _terrain;
 	void update(float delta) override;
+	bool onTouchBegan(Touch* touch, Event* event);
+	void onTouchEnded(Touch* touch, Event* event);
+	void onTouchCancelled(Touch* touch, Event* event);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

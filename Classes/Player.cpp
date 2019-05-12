@@ -7,6 +7,11 @@ Player::Player()
 	_maxSpeed = PLAYER_INITIAL_SPEED;
 	_speed = 0;
 	_state = kPlayerMoving;
+	_jumping = false;
+	_floating = false;
+	_floatingTimerMax = 2;
+	_floatingTimer = 0;
+	_hasFloated = false;
 }
 
 Player* Player::create()
@@ -49,8 +54,16 @@ void Player::update(float delta)
 		break;
 
 	case kPlayerFalling:
-		_vector.y -= GRAVITY;
-		_vector.x *= AIR_FRICTION;
+		if (_floating) {
+			_vector.y -= FLOATNG_GRAVITY;
+			_vector.x *= FLOATING_FRICTION;
+
+		}
+		else {
+			_vector.y -= GRAVITY;
+			_vector.x *= AIR_FRICTION;
+			_floatingTimer = 0;
+		}
 		break;
 
 	case kPlayerDying:
@@ -59,5 +72,36 @@ void Player::update(float delta)
 		this->setPositionX(this->getPositionX() + _vector.x);
 		break;
 	}
+
+	if (_jumping) {
+		_state = kPlayerFalling;
+		_vector.y += PLAYER_JUMP * 0.25f;
+		if (_vector.y > PLAYER_JUMP) _jumping = false;
+	}
+
+	if (_vector.y < -TERMINAL_VELOCITY) _vector.y = -TERMINAL_VELOCITY;
+
 	_nextPosition.y = this->getPositionY() + _vector.y;
+
+	if (_floating) {
+		_floatingTimer += delta;
+		if (_floatingTimer > _floatingTimerMax) {
+			_floatingTimer = 0;
+			this->setFloating(false);
+		}
+	}
+}
+
+void Player::setFloating(bool value)
+{
+	if (_floating == value) return;
+
+	if (value && _hasFloated) return;
+
+	_floating = value;
+
+	if (value) {
+		_hasFloated = true;
+		_vector.y += PLAYER_JUMP * 0.5f;
+	}
 }
